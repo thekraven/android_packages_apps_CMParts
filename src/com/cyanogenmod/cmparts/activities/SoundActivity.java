@@ -57,6 +57,8 @@ public class SoundActivity extends PreferenceActivity implements OnPreferenceCha
 
     private static final String LOCK_VOLUME_KEYS = "lock-volume-keys";
 
+    private static final String DEFAULT_VOLUME_MEDIA = "default-volume-media";
+
     private static final String RINGS_SPEAKER = "ring-speaker";
 
     private static final String RINGS_ATTENUATION = "ring-attn";
@@ -106,6 +108,11 @@ public class SoundActivity extends PreferenceActivity implements OnPreferenceCha
         p = (CheckBoxPreference) prefSet.findPreference(VIBRATE_IN_CALL);
         p.setChecked(Settings.System.getInt(getContentResolver(),
                 Settings.System.VIBRATE_IN_CALL, 1) != 0);
+        p.setOnPreferenceChangeListener(this);
+
+	p = (CheckBoxPreference) prefSet.findPreference(DEFAULT_VOLUME_MEDIA);
+        p.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.DEFAULT_VOLUME_CONTROL_MEDIA, 0) != 0);
         p.setOnPreferenceChangeListener(this);
 
         p = (CheckBoxPreference) prefSet.findPreference(LOCK_VOLUME_KEYS);
