@@ -51,6 +51,18 @@
         <item>2</item>
     </string-array>
 
+    <string-array name="values_transparent_status_bar">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    
+    <string-array name="entries_transparent_status_bar">
+        <item>Theme (default)</item>
+        <item>Custom Color</item>
+        <item>Transparent</item>
+    </string-array> 
+
     <string-array name="entries_status_bar_carrier_label" translatable="false">
 	<item>@string/ui_status_bar_carrier_label_use_default</item>
 	<item>@string/ui_status_bar_carrier_label_use_spn</item>

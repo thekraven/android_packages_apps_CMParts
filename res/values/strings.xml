@@ -112,6 +112,10 @@
     <string name="ui_status_bar_carrier_label_use_custom">Custom text</string>
     <string name="ui_status_bar_carrier_label_custom_title">Custom carrier label</string>
     <string name="ui_status_bar_carrier_label_custom_summary">Text used instead of the operator provided carrier label</string>
+    <string name="ui_status_bar_color_title">Status bar background Color</string>
+    <string name="ui_status_bar_color_summary">Reboot required</string>
+    <string name="pref_transparent_status_bar_title">Status bar appearance</string>
+    <string name="pref_transparent_status_bar_summary">Default, transparent, or user defined color</string>
     <string name="ui_status_bar_toggle_brightness">Status bar brightness control</string>
     <string name="ui_status_bar_toggle_brightness_summary">Allows adjusting of brightness by sliding across statusbar</string>
     <string name="ui_status_bar_toggle_info">Automatic brightness is enabled</string>
@@ -511,7 +515,11 @@
     <string name="pref_install_location_title">Install location</string>
     <string name="pref_install_location_summary">Select where new applications should be installed</string>
 
-    <string name="general_title">General</string>
+    <!-- Status Bar Appearance Settings -->
+    <string name="general_title">Status bar settings</string>
+    <string name="clock_settings_title">Status bar clock settings</string>
+    <string name="carrier_settings_title">Carrier label settings</string>
+    <string name="sys_icon_settings_title">System icon settings</string>
     <string name="camera_title">Camera</string>
     <string name="buttons_title">Buttons</string>
 
