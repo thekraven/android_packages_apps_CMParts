@@ -57,6 +57,8 @@ public class SoundActivity extends PreferenceActivity implements OnPreferenceCha
 
     private static final String LOCK_VOLUME_KEYS = "lock-volume-keys";
 
+    private static final String VOLUME_KEY_BEEPS = "volume-key-beeps";
+
     private static final String DEFAULT_VOLUME_MEDIA = "default-volume-media";
 
     private static final String RINGS_SPEAKER = "ring-speaker";
@@ -121,6 +123,11 @@ public class SoundActivity extends PreferenceActivity implements OnPreferenceCha
         p.setChecked(Settings.System.getInt(getContentResolver(),
                 Settings.System.LOCK_VOLUME_KEYS, 0) != 0);
         p.setOnPreferenceChangeListener(this);
+
+        p = (CheckBoxPreference) prefSet.findPreference(VOLUME_KEY_BEEPS);
+        p.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.VOLUME_KEY_BEEPS, 1) != 0);
+	p.setOnPreferenceChangeListener(this);
 
         p = (CheckBoxPreference) prefSet.findPreference(RINGS_SPEAKER);
         p.setChecked(SystemProperties.getBoolean(getKey(RINGS_SPEAKER), false));
@@ -188,6 +195,9 @@ public class SoundActivity extends PreferenceActivity implements OnPreferenceCha
                     getBoolean(newValue) ? 1 : 0);
         } else if (key.equals(LOCK_VOLUME_KEYS)) {
             Settings.System.putInt(getContentResolver(), Settings.System.LOCK_VOLUME_KEYS,
+                    getBoolean(newValue) ? 1 : 0);
+	} else if (key.equals(VOLUME_KEY_BEEPS)) {
+            Settings.System.putInt(getContentResolver(), Settings.System.VOLUME_KEY_BEEPS,
                     getBoolean(newValue) ? 1 : 0);
         } else if (key.equals(NOTIFICATIONS_SPEAKER) || key.equals(RINGS_SPEAKER)
                 || key.equals(ALARMS_SPEAKER)) {

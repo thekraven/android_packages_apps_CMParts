@@ -17,7 +17,7 @@
 			android:summary="@string/sound_volume_control_silent_summary"
 			android:persistent="false" />
 
-        <!-- Vibrate on call -->
+        	<!-- Vibrate on call -->
 		<CheckBoxPreference android:key="vibrate-in-call"
 			android:title="@string/sound_vibrate_in_call_title"
 			android:summaryOn="@string/sound_vibrate_in_call_summary_on"
@@ -29,6 +29,13 @@
 			android:title="@string/sound_lock_volume_keys_title"
 			android:summary="@string/sound_lock_volume_keys_summary"
 			android:persistent="false" />
+
+		<!--  Volume key beeps -->
+		<CheckBoxPreference android:key="volume-key-beeps"
+		        android:title="@string/sound_volume_key_beeps_title"
+		        android:summaryOn="@string/sound_volume_key_beeps_summary_on"
+		        android:summaryOff="@string/sound_volume_key_beeps_summary_off"
+		        android:persistent="false" />
 
 		<!-- Default volume media -->
                  <CheckBoxPreference android:key="default-volume-media"
