@@ -155,7 +155,7 @@ public class UIStatusBarActivity extends PreferenceActivity implements OnPrefere
         int statusBarColor = Settings.System.getInt(getContentResolver(),
                 Settings.System.STATUS_BAR_COLOR, 0);
         mStatusBarColor.setSummary(Integer.toHexString(statusBarColor));
-        mStatusBarColor.setEnabled(transparentStatusBarPref == 1);
+        mStatusBarColor.setEnabled(transparentStatusBarPref == 2);
 
 	int transparentNotificationBackgroundPref = Settings.System.getInt(getContentResolver(),
                 Settings.System.TRANSPARENT_NOTIFICATION_BACKGROUND, 0);
@@ -166,7 +166,7 @@ public class UIStatusBarActivity extends PreferenceActivity implements OnPrefere
         int notificationBackgroundColor = Settings.System.getInt(getContentResolver(),
                 Settings.System.NOTIFICATION_BACKGROUND_COLOR, 0);
         mNotificationBackgroundColor.setSummary(Integer.toHexString(notificationBackgroundColor));
-        mNotificationBackgroundColor.setEnabled(transparentNotificationBackgroundPref == 1);
+        mNotificationBackgroundColor.setEnabled(transparentNotificationBackgroundPref == 2);
 
         mStatusBarAmPm = (ListPreference) prefSet.findPreference(PREF_STATUS_BAR_AM_PM);
         mStatusBarBattery = (ListPreference) prefSet.findPreference(PREF_STATUS_BAR_BATTERY);
@@ -247,13 +247,13 @@ public class UIStatusBarActivity extends PreferenceActivity implements OnPrefere
             return true;
 	} else if (preference == mTransparentStatusBarPref) {
             int transparentStatusBarPref = Integer.parseInt(String.valueOf(newValue));
-            mStatusBarColor.setEnabled(transparentStatusBarPref == 1);
+            mStatusBarColor.setEnabled(transparentStatusBarPref == 2);
             Settings.System.putInt(getContentResolver(), Settings.System.TRANSPARENT_STATUS_BAR,
                     transparentStatusBarPref);
             return true;
 	} else if (preference == mTransparentNotificationBackgroundPref) {
             int transparentNotificationBackgroundPref = Integer.parseInt(String.valueOf(newValue));
-            mNotificationBackgroundColor.setEnabled(transparentNotificationBackgroundPref == 1);
+	    mNotificationBackgroundColor.setEnabled(transparentNotificationBackgroundPref == 2);
             Settings.System.putInt(getContentResolver(), Settings.System.TRANSPARENT_NOTIFICATION_BACKGROUND,
                     transparentNotificationBackgroundPref);
             return true;
