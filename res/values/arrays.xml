@@ -29,6 +29,7 @@
         <item>24m</item>
         <item>32m</item>
         <item>48m</item>
+	<item>64m</item>
     </string-array>
 
     <string-array name="values_heapsize" translatable="false">
@@ -37,6 +38,7 @@
         <item>24m</item>
         <item>32m</item>
         <item>48m</item>
+	<item>64m</item>
     </string-array>
 
     <string-array name="entries_install_location">
@@ -597,12 +599,14 @@
         <item>@string/ringlock_style_entry_bubbles</item>
         <item>@string/ringlock_style_entry_revamped</item>
         <item>@string/ringlock_style_entry_holo</item>
+	<item>@string/ringlock_style_entry_blade</item>
     </string-array>
 
     <string-array name="pref_ringlock_style_values" translatable="false">
         <item>1</item>
         <item>2</item>
         <item>3</item>
+	<item>4</item>
     </string-array>
 
     <string-array name="pref_in_call_style_entries" translatable="false">
