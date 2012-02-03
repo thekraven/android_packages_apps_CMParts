@@ -131,11 +131,13 @@
     <string name="pref_share_screenshot_summary">Mostrar el menú \"Compartir\" al realizar una captura (de pantalla)</string>
 
     <!-- User interface : Overscroll -->
-    <string name="ui_overscroll_title">Superposición</string>
-    <string name="pref_overscroll_title">Efecto superposición</string>
-    <string name="pref_overscroll_summary">Elige como se ven los objetos cuando se superponen</string>
-    <string name="pref_overscroll_weight_title">Anchura superposición</string>
-    <string name="pref_overscroll_weight_summary">Selecciona el ancho de los objetos superpuestos</string>
+    <string name="ui_overscroll_title">Sobredesplazamiento</string>
+    <string name="pref_overscroll_title">Efecto sobredesplazamiento</string>
+    <string name="pref_overscroll_summary">Elige el efecto para el sobredesplazamiento</string>
+    <string name="pref_overscroll_weight_title">Anchura del efecto</string>
+    <string name="pref_overscroll_weight_summary">Elige el ancho para el efecto de sobredesplazamiento</string>
+    <string name="pref_overscroll_color_title">Color del efecto</string>
+    <string name="pref_overscroll_color_summary">Elige el color para el efecto de sobredesplazamiento</string>
 
     <!-- User interface : Lock Screen -->
     <string name="pref_lockscreen_delay_title">Tiempo de espera</string>
@@ -660,11 +662,17 @@
     <string name="sound_vibrate_in_call_title">Vibrar durante una llamada</string>
     <string name="sound_vibrate_in_call_summary_off">Las notificaciones no vibrarán durante una llamada</string>
     <string name="sound_vibrate_in_call_summary_on">Las notificaciones vibrarán normalmente</string>
+    <string name="sound_volume_key_beeps_title">Sonido botones Volumen</string>
+    <string name="sound_volume_key_beeps_summary_off">El ajuste del volumen será silencioso</string>
+    <string name="sound_volume_key_beeps_summary_on">El ajuste del volumen irá acompañado de un sonido</string>
     <string name="sound_camera_shutter_disable_title">Silenciar obturador</string>
     <string name="sound_camera_shutter_disable_summary_on">El sonido del obturador no será reproducido</string>
     <string name="sound_camera_shutter_disable_summary_off">El sonido del obturador será reproducido</string>
     <string name="sound_camera_shutter_disable_warning_title">AVISO: ¡Esto podría ser ilegal!</string>
     <string name="sound_camera_shutter_disable_warning">Deshabilitar el sonido de la cámara es ilegal en algunas zonas. ¿Seguro que quieres deshabilitarlo?</string>
+    <string name="sound_camera_focus_mute_title">Silenciar enfoque</string>
+    <string name="sound_camera_focus_mute_summary_on">El sonido del enfoque no será reproducido</string>
+    <string name="sound_camera_focus_mute_summary_off">El sonido del enfoque será reproducido</string>
     <string name="sound_lock_volume_keys_title">Bloquear botones Volumen</string>
     <string name="sound_lock_volume_keys_summary">Previene un uso accidental del volumen cuando el terminal está en modo silencio</string>
     <string name="sound_to_speaker_title">Reproducir siempre en el altavoz</string>
@@ -681,6 +689,8 @@
     <string name="sound_notifications_limitvol_dialog">Volumen de las notificaciones</string>
     <string name="sound_rings_limitvol_dialog">Volumen del tono de llamada</string>
     <string name="sound_alarms_limitvol_dialog">Volumen de la alarma</string>
+    <string name="sound_swap_volume_keys_dialog">Intercambiar a\u2026</string>
+    <string name="sound_swap_volume_keys_title">Intercambiar teclas volumen</string>
 
     <!-- Quiet hours -->
     <string name="sound_category_quiet_hours_title">Horas de silencio</string>

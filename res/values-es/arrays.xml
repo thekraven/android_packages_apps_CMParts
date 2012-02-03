@@ -220,11 +220,24 @@
     </string-array>
 
     <string-array name="entries_overscroll_weight">
-        <item>Muy fuerte</item>
-        <item>Fuerte</item>
-        <item>Medio</item>
-        <item>Leve</item>
-        <item>Muy leve</item>
+        <item>Muy Grande</item>
+        <item>Grandee</item>
+        <item>Media</item>
+        <item>Pequeña</item>
+        <item>Muy pequeña</item>
+    </string-array>
+
+    <string-array name="entries_overscroll_color">
+        <item>Color predeterminado</item>
+        <item>Color personalizado</item>
+    </string-array>
+
+    <string-array name="swap_volume_keys_orientation_list_entries">
+        <item>Nunca</item>
+        <item>0 grados</item>
+        <item>90 grados</item>
+        <item>180 grados</item>
+        <item>270 grados</item>
     </string-array>
 
     <string-array name="entries_vol_actions">
