@@ -36,6 +36,7 @@ import android.provider.Settings;
 import android.text.format.DateFormat;
 import android.widget.TimePicker;
 import java.util.Calendar;
+import android.media.AudioManager;
 
 public class SoundActivity extends PreferenceActivity implements OnPreferenceChangeListener {
 
@@ -53,9 +54,15 @@ public class SoundActivity extends PreferenceActivity implements OnPreferenceCha
 
     private static final String VOLUME_CONTROL_SILENT = "vol-ctrl-silent";
 
+    private static final String SWAP_VOLUME_KEYS = "swap-vol-keys";
+
     private static final String VIBRATE_IN_CALL = "vibrate-in-call";
 
     private static final String LOCK_VOLUME_KEYS = "lock-volume-keys";
+
+    private static final String VOLUME_KEY_BEEPS = "volume-key-beeps";
+
+    private static final String DEFAULT_VOLUME_MEDIA = "default-volume-media";
 
     private static final String RINGS_SPEAKER = "ring-speaker";
 
@@ -70,6 +77,8 @@ public class SoundActivity extends PreferenceActivity implements OnPreferenceCha
     private static final String ALARMS_LIMITVOL = "alarm-limitvol";
 
     private static final String CAMERA_SHUTTER_MUTE = "camera-mute";
+
+    private static final String CAMERA_FOCUS_MUTE = "camera_focus_mute";
 
     private static final String PREFIX = "persist.sys.";
 
@@ -108,10 +117,20 @@ public class SoundActivity extends PreferenceActivity implements OnPreferenceCha
                 Settings.System.VIBRATE_IN_CALL, 1) != 0);
         p.setOnPreferenceChangeListener(this);
 
+	p = (CheckBoxPreference) prefSet.findPreference(DEFAULT_VOLUME_MEDIA);
+        p.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.DEFAULT_VOLUME_CONTROL_MEDIA, 0) != 0);
+        p.setOnPreferenceChangeListener(this);
+
         p = (CheckBoxPreference) prefSet.findPreference(LOCK_VOLUME_KEYS);
         p.setChecked(Settings.System.getInt(getContentResolver(),
                 Settings.System.LOCK_VOLUME_KEYS, 0) != 0);
         p.setOnPreferenceChangeListener(this);
+
+        p = (CheckBoxPreference) prefSet.findPreference(VOLUME_KEY_BEEPS);
+        p.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.VOLUME_KEY_BEEPS, 1) != 0);
+	p.setOnPreferenceChangeListener(this);
 
         p = (CheckBoxPreference) prefSet.findPreference(RINGS_SPEAKER);
         p.setChecked(SystemProperties.getBoolean(getKey(RINGS_SPEAKER), false));
@@ -151,14 +170,26 @@ public class SoundActivity extends PreferenceActivity implements OnPreferenceCha
         lp.setSummary(lp.getEntry());
         lp.setOnPreferenceChangeListener(this);
 
+	lp = (ListPreference) prefSet.findPreference(SWAP_VOLUME_KEYS);
+        lp.setValue(String.valueOf(Settings.System.getInt(getContentResolver(),
+                Settings.System.SWAP_VOLUME_KEYS_ORIENTATION,
+                getResources().getInteger(com.android.internal.R.integer.swap_volume_keys_orientation))));
+        lp.setSummary(lp.getEntry());
+        lp.setOnPreferenceChangeListener(this);
+
         if (SystemProperties.getBoolean(CAMERA_SHUTTER_DISABLE, false)) {
             // we cannot configure camera sound, hide camera settigs
-            prefSet.removePreference(prefSet.findPreference(CAMERA_CATEGORY));
+            prefSet.removePreference(prefSet.findPreference(CAMERA_SHUTTER_MUTE));
         } else {
             p = (CheckBoxPreference) prefSet.findPreference(CAMERA_SHUTTER_MUTE);
             p.setChecked(SystemProperties.getBoolean(getKey(CAMERA_SHUTTER_MUTE), false));
             p.setOnPreferenceChangeListener(this);
         }
+
+	p = (CheckBoxPreference) prefSet.findPreference(CAMERA_FOCUS_MUTE);
+        p.setChecked(Settings.System.getInt(getContentResolver(),
+                CAMERA_FOCUS_MUTE, 0) == 1);
+        p.setOnPreferenceChangeListener(this);
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -169,15 +200,29 @@ public class SoundActivity extends PreferenceActivity implements OnPreferenceCha
         } else if (key.equals(VOLUME_CONTROL_SILENT)) {
             Settings.System.putInt(getContentResolver(), Settings.System.VOLUME_CONTROL_SILENT,
                     getBoolean(newValue) ? 1 : 0);
+	} else if (key.equals(SWAP_VOLUME_KEYS)) {
+            Settings.System.putInt(getContentResolver(), Settings.System.SWAP_VOLUME_KEYS_ORIENTATION,
+                    getInt(newValue));
+            ((AudioManager)getSystemService(AUDIO_SERVICE)).reloadAudioSettings();
+            mHandler.sendMessage(mHandler.obtainMessage(0, key));
         } else if (key.equals(VIBRATE_IN_CALL)) {
             Settings.System.putInt(getContentResolver(), Settings.System.VIBRATE_IN_CALL,
                     getBoolean(newValue) ? 1 : 0);
         } else if (key.equals(LOCK_VOLUME_KEYS)) {
             Settings.System.putInt(getContentResolver(), Settings.System.LOCK_VOLUME_KEYS,
                     getBoolean(newValue) ? 1 : 0);
+	} else if (key.equals(DEFAULT_VOLUME_MEDIA)) {
+            Settings.System.putInt(getContentResolver(), Settings.System.DEFAULT_VOLUME_CONTROL_MEDIA,
+                    getBoolean(newValue) ? 1 : 0);
+	} else if (key.equals(VOLUME_KEY_BEEPS)) {
+            Settings.System.putInt(getContentResolver(), Settings.System.VOLUME_KEY_BEEPS,
+                    getBoolean(newValue) ? 1 : 0);
         } else if (key.equals(NOTIFICATIONS_SPEAKER) || key.equals(RINGS_SPEAKER)
                 || key.equals(ALARMS_SPEAKER)) {
             SystemProperties.set(getKey(key), getBoolean(newValue) ? "1" : "0");
+	} else if (key.equals(CAMERA_FOCUS_MUTE)) {
+            Settings.System.putInt(getContentResolver(), Settings.System.CAMERA_FOCUS_MUTE,
+                    getBoolean(newValue) ? 1 : 0);
         } else if (key.equals(CAMERA_SHUTTER_MUTE)) {
             if (getBoolean(newValue)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);

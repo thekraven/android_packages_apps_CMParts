@@ -16,11 +16,16 @@
 
 package com.cyanogenmod.cmparts.activities;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.SystemProperties;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -29,6 +34,13 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
+import android.net.Uri;
+import android.util.Log;
+import android.view.KeyEvent;
+	
+import java.io.FileOutputStream;
+import java.io.File;
+import java.io.IOException;
 
 import com.cyanogenmod.cmparts.R;
 
@@ -52,6 +64,12 @@ public class UIActivity extends PreferenceActivity implements OnPreferenceChange
     private PreferenceScreen mExtrasScreen;
 
     /* Other */
+    private static final String BOOTANIMATION_PREF = "pref_bootanimation";
+
+    private static final String BOOTANIMATION_RESET_PREF = "pref_bootanimation_reset";
+
+    private static final String BOOTANIMATION_PREVIEW_PREF = "pref_bootanimation_preview";
+
     private static final String PINCH_REFLOW_PREF = "pref_pinch_reflow";
 
     private static final String RENDER_EFFECT_PREF = "pref_render_effect";
@@ -62,7 +80,31 @@ public class UIActivity extends PreferenceActivity implements OnPreferenceChange
 
     private static final String OVERSCROLL_PREF = "pref_overscroll_effect";
 
+    private static final String OVERSCROLL_COLOR = "pref_overscroll_color";
+
     private static final String OVERSCROLL_WEIGHT_PREF = "pref_overscroll_weight";
+
+    private PreferenceScreen mBootPref;
+
+    private PreferenceScreen mBootReset;
+
+    private PreferenceScreen mBootPreview;
+
+    private static final int REQUEST_CODE_PICK_FILE = 999;
+	
+    private static final int REQUEST_CODE_MOVE_FILE = 1000;
+
+    private static final int REQUEST_CODE_PREVIEW_FILE = 1001;
+
+    private static boolean mBootPreviewRunning;
+
+    private static int prevOrientation;
+
+    private static final String MOVE_BOOT_INTENT = "com.cyanogenmod.cmbootanimation.MOVE_BOOTANIMATION";
+
+    private static final String BOOT_RESET = "com.cyanogenmod.cmbootanimation.RESET_DEFAULT";
+
+    private static final String BOOT_PREVIEW_FILE = "preview_bootanim";
 
     private CheckBoxPreference mPinchReflowPref;
 
@@ -73,6 +115,8 @@ public class UIActivity extends PreferenceActivity implements OnPreferenceChange
     private CheckBoxPreference mShareScreenshotPref;
 
     private ListPreference mOverscrollPref;
+
+    private ListPreference mOverscrollColor;	
 
     private ListPreference mOverscrollWeightPref;
 
@@ -99,6 +143,11 @@ public class UIActivity extends PreferenceActivity implements OnPreferenceChange
                     .removePreference(mTrackballScreen);
         }
 
+	/* Boot Animation Chooser */
+        mBootPref = (PreferenceScreen) prefSet.findPreference(BOOTANIMATION_PREF);
+        mBootReset = (PreferenceScreen) prefSet.findPreference(BOOTANIMATION_RESET_PREF);
+        mBootPreview = (PreferenceScreen) prefSet.findPreference(BOOTANIMATION_PREVIEW_PREF);
+
         /* Pinch reflow */
         mPinchReflowPref = (CheckBoxPreference) prefSet.findPreference(PINCH_REFLOW_PREF);
         mPinchReflowPref.setChecked(Settings.System.getInt(getContentResolver(),
@@ -120,6 +169,12 @@ public class UIActivity extends PreferenceActivity implements OnPreferenceChange
                 Settings.System.OVERSCROLL_EFFECT, 1);
         mOverscrollPref.setValue(String.valueOf(overscrollEffect));
         mOverscrollPref.setOnPreferenceChangeListener(this);
+
+	mOverscrollColor = (ListPreference) prefSet.findPreference(OVERSCROLL_COLOR);
+        mOverscrollColor.setOnPreferenceChangeListener(this);
+        int overscrollColor = Settings.System.getInt(getContentResolver(),
+                Settings.System.OVERSCROLL_COLOR,0);
+        mOverscrollColor.setValue(String.valueOf(overscrollColor == 0 ? 0 : 1));
 
         mOverscrollWeightPref = (ListPreference) prefSet.findPreference(OVERSCROLL_WEIGHT_PREF);
         int overscrollWeight = Settings.System.getInt(getContentResolver(),
@@ -159,12 +214,29 @@ public class UIActivity extends PreferenceActivity implements OnPreferenceChange
             value = mPowerPromptPref.isChecked();
             Settings.System.putInt(getContentResolver(), Settings.System.POWER_DIALOG_PROMPT,
                     value ? 1 : 0);
+	    return true;
+        } else if (preference == mBootPref) {
+            Intent intent = new Intent("org.openintents.action.PICK_FILE");
+            intent.setData(Uri.parse("file:///sdcard/"));
+            intent.putExtra("org.openintents.extra.TITLE", "Please select a file");
+            startActivityForResult(intent, REQUEST_CODE_PICK_FILE);
+            return true;
+        } else if (preference == mBootReset) {
+            Intent intent = new Intent(BOOT_RESET);
+            sendBroadcast(intent);
+            return true;
+        }  else if (preference == mBootPreview) {
+            Intent intent = new Intent("org.openintents.action.PICK_FILE");
+            intent.setData(Uri.parse("file:///sdcard/"));
+            intent.putExtra("org.openintents.extra.TITLE", "Please select a file to preview");
+            startActivityForResult(intent, REQUEST_CODE_PREVIEW_FILE);
             return true;
         }
         return false;
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+	String val = newValue.toString();
         if (preference == mRenderEffectPref) {
             writeRenderEffect(Integer.valueOf((String) newValue));
             return true;
@@ -178,9 +250,30 @@ public class UIActivity extends PreferenceActivity implements OnPreferenceChange
             Settings.System.putInt(getContentResolver(), Settings.System.OVERSCROLL_WEIGHT,
                     overscrollWeight);
             return true;
+	} else if (preference == mOverscrollColor){
+            if (mOverscrollColor.findIndexOfValue(val)==0){
+                Settings.System.putInt(getContentResolver(), Settings.System.OVERSCROLL_COLOR,0);
+            }else{
+                int overscrollColor = Settings.System.getInt(getContentResolver(),
+                        Settings.System.OVERSCROLL_COLOR,0);
+                ColorPickerDialog cp = new ColorPickerDialog(this,mPackageColorListener,
+                        overscrollColor);
+                cp.show();
+            }
+            return true;
         }
         return false;
     }
+
+    ColorPickerDialog.OnColorChangedListener mPackageColorListener = new
+    ColorPickerDialog.OnColorChangedListener() {
+        public void colorChanged(int color) {
+            Settings.System.putInt(getContentResolver(), Settings.System.OVERSCROLL_COLOR,color);
+        }
+        @Override
+        public void colorUpdate(int color) {
+        }
+    };
 
     // Taken from DevelopmentSettings
     private void updateFlingerOptions() {
@@ -237,4 +330,80 @@ public class UIActivity extends PreferenceActivity implements OnPreferenceChange
         }
     };
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Context context = getApplicationContext();
+        switch (requestCode) {
+            case REQUEST_CODE_PICK_FILE:
+                if (resultCode == RESULT_OK && data != null) {
+                    // obtain the filename
+                    Uri fileUri = data.getData();
+                    if (fileUri != null) {
+                        String filePath = fileUri.getPath();
+                        if (filePath != null) {
+                            Intent mvBootIntent = new Intent();
+                            mvBootIntent.setAction(MOVE_BOOT_INTENT);
+                            mvBootIntent.putExtra("fileName", filePath);
+                            sendBroadcast(mvBootIntent);
+                        }
+                    }
+                }
+            break;
+            case REQUEST_CODE_PREVIEW_FILE:
+                if (resultCode == RESULT_OK && data != null) {
+                    Uri fileUri = data.getData();
+                    if (fileUri != null) {
+                        String filePath = fileUri.getPath();
+                        if (filePath != null) {
+                            try {
+                                FileOutputStream outfile = context.openFileOutput(BOOT_PREVIEW_FILE, Context.MODE_WORLD_READABLE);
+                                outfile.write(filePath.getBytes());
+                                outfile.close();
+                            } catch (Exception e) { }
+                            mBootPreviewRunning = true;
+                            prevOrientation = getRequestedOrientation();
+                            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                            SystemProperties.set("ctl.start", "bootanim");
+                        }
+                    }
+                }
+            break;
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Context context = getApplicationContext();
+        if(mBootPreviewRunning) {
+	    File rmFile = new File(context.getFilesDir(), BOOT_PREVIEW_FILE);
+            if (rmFile.exists()) {
+                try {
+                    rmFile.delete();
+                } catch (Exception e) { }
+            }
+            setRequestedOrientation(prevOrientation);
+            SystemProperties.set("ctl.stop", "bootanim");
+            mBootPreviewRunning = false;
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        Context context = getApplicationContext();
+        if (keyCode == KeyEvent.KEYCODE_BACK && mBootPreviewRunning) {
+            File rmFile = new File(context.getFilesDir(), BOOT_PREVIEW_FILE);
+            if (rmFile.exists()) {
+                try {
+                    rmFile.delete();
+                } catch (Exception e) { }
+            }
+            SystemProperties.set("ctl.stop", "bootanim");
+            mBootPreviewRunning = false;
+            setRequestedOrientation(prevOrientation);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }
