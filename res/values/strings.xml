@@ -122,7 +122,7 @@
     <string name="ui_notification_background_color_summary">Reboot required</string>
     <string name="pref_transparent_notification_background_title">Notification dropdown\nbackground</string>
     <string name="pref_transparent_notification_background_dialog_title">Notification dropdown background</string>
-    <string name="pref_transparent_notification_background_summary">Theme, ROM, transparent,\nuser defined color, or special.\nReboot required.</string>
+    <string name="pref_transparent_notification_background_summary">Theme, ROM, transparent,\nuser defined color, special, or image.\nReboot required.</string> 
  
     <string name="ui_status_bar_toggle_brightness">Status bar brightness control</string>
     <string name="ui_status_bar_toggle_brightness_summary">Allows adjusting of brightness by sliding across statusbar</string>
