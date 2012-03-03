@@ -137,12 +137,12 @@ public class UIStatusBarActivity extends PreferenceActivity implements OnPrefere
         PreferenceScreen prefSet = getPreferenceScreen();
 
         mStatusBarClock = (CheckBoxPreference) prefSet.findPreference(PREF_STATUS_BAR_CLOCK);
-	mStatusBarCenterClock = (CheckBoxPreference) prefSet.findPreference(PREF_STATUS_BAR_CENTERCLOCK);
+		mStatusBarCenterClock = (CheckBoxPreference) prefSet.findPreference(PREF_STATUS_BAR_CENTERCLOCK);
         mStatusBarClockColor = (Preference) prefSet.findPreference(PREF_STATUS_BAR_CLOCKCOLOR);
         mStatusBarClockColor.setOnPreferenceChangeListener(this);
-	mStatusBarColor = (Preference) prefSet.findPreference(PREF_STATUS_BAR_COLOR);
+		mStatusBarColor = (Preference) prefSet.findPreference(PREF_STATUS_BAR_COLOR);
         mStatusBarColor.setOnPreferenceChangeListener(this);
-	mNotificationBackgroundColor = (Preference) prefSet.findPreference(PREF_NOTIFICATION_BACKGROUND_COLOR);
+		mNotificationBackgroundColor = (Preference) prefSet.findPreference(PREF_NOTIFICATION_BACKGROUND_COLOR);
         mNotificationBackgroundColor.setOnPreferenceChangeListener(this);
         mStatusBarCompactCarrier = (CheckBoxPreference) prefSet
                 .findPreference(PREF_STATUS_BAR_COMPACT_CARRIER);
@@ -154,7 +154,7 @@ public class UIStatusBarActivity extends PreferenceActivity implements OnPrefere
 
         mStatusBarClock.setChecked((Settings.System.getInt(getContentResolver(),
                 Settings.System.STATUS_BAR_CLOCK, 1) == 1));
-	mStatusBarCenterClock.setChecked((Settings.System.getInt(getContentResolver(),
+		mStatusBarCenterClock.setChecked((Settings.System.getInt(getContentResolver(),
                 Settings.System.STATUS_BAR_CENTERCLOCK, 1) == 1));
         mStatusBarCompactCarrier.setChecked((Settings.System.getInt(getContentResolver(),
                 Settings.System.STATUS_BAR_COMPACT_CARRIER, 0) == 1));
@@ -172,7 +172,7 @@ public class UIStatusBarActivity extends PreferenceActivity implements OnPrefere
         } catch (SettingNotFoundException e) {
         }
 	
-	int clockColor = Settings.System.getInt(getContentResolver(),
+		int clockColor = Settings.System.getInt(getContentResolver(),
                 Settings.System.STATUS_BAR_CLOCKCOLOR, 0);
         mStatusBarClockColor.setSummary(Integer.toHexString(clockColor));
 
@@ -187,7 +187,7 @@ public class UIStatusBarActivity extends PreferenceActivity implements OnPrefere
         mStatusBarColor.setSummary(Integer.toHexString(statusBarColor));
         mStatusBarColor.setEnabled(transparentStatusBarPref == 2);
 
-	int transparentNotificationBackgroundPref = Settings.System.getInt(getContentResolver(),
+		int transparentNotificationBackgroundPref = Settings.System.getInt(getContentResolver(),
                 Settings.System.TRANSPARENT_NOTIFICATION_BACKGROUND, 0);
         mTransparentNotificationBackgroundPref = (ListPreference) prefSet.findPreference(PREF_TRANSPARENT_NOTIFICATION_BACKGROUND);
         mTransparentNotificationBackgroundPref.setValue(String.valueOf(transparentNotificationBackgroundPref));
@@ -276,8 +276,14 @@ public class UIStatusBarActivity extends PreferenceActivity implements OnPrefere
             Settings.System.putInt(getContentResolver(), Settings.System.CARRIER_LABEL_TYPE,
                     carrierLabelType);
             return true;
-	} else if (preference == mTransparentStatusBarPref) {
+	    } else if (preference == mTransparentStatusBarPref) {
             int transparentStatusBarPref = Integer.parseInt(String.valueOf(newValue));
+			mStatusBarColor.setEnabled(transparentStatusBarPref == 2);
+            Settings.System.putInt(getContentResolver(), Settings.System.TRANSPARENT_STATUS_BAR,
+                    transparentStatusBarPref);
+            return true;
+		} else if (preference == mTransparentNotificationBackgroundPref) {
+            int transparentNotificationBackgroundPref = Integer.parseInt(String.valueOf(newValue));
 			if (transparentNotificationBackgroundPref == 5) { 
 //                Intent intent = new Intent("org.openintents.action.PICK_FILE"); 
 //                intent.setData(Uri.parse("file:///sdcard/")); 
@@ -301,7 +307,8 @@ public class UIStatusBarActivity extends PreferenceActivity implements OnPrefere
                     Configuration.ORIENTATION_PORTRAIT; 
                 intent.putExtra("aspectX", isPortrait ? width : height - titleBarHeight); 
                 intent.putExtra("aspectY", isPortrait ? height - titleBarHeight : width); 
-                try { 
+                try {
+				
                     notificationBackgroundImage.createNewFile(); 
                     notificationBackgroundImage.setReadable(true, false); 
                     notificationBackgroundImage.setWritable(true, false); 
@@ -314,13 +321,8 @@ public class UIStatusBarActivity extends PreferenceActivity implements OnPrefere
                     Log.e("Picker", "ActivityNotFoundException: ", e); 
                 }       
             } 
-            mStatusBarColor.setEnabled(transparentStatusBarPref == 2);
-            Settings.System.putInt(getContentResolver(), Settings.System.TRANSPARENT_STATUS_BAR,
-                    transparentStatusBarPref);
-            return true;
-	} else if (preference == mTransparentNotificationBackgroundPref) {
-            int transparentNotificationBackgroundPref = Integer.parseInt(String.valueOf(newValue));
-	    mNotificationBackgroundColor.setEnabled(transparentNotificationBackgroundPref == 2);
+			
+			mNotificationBackgroundColor.setEnabled(transparentNotificationBackgroundPref == 2);
             Settings.System.putInt(getContentResolver(), Settings.System.TRANSPARENT_NOTIFICATION_BACKGROUND,
                     transparentNotificationBackgroundPref);
             return true;
@@ -343,7 +345,7 @@ public class UIStatusBarActivity extends PreferenceActivity implements OnPrefere
             Settings.System.putInt(getContentResolver(), Settings.System.STATUS_BAR_CLOCK,
                     value ? 1 : 0);
             return true;
-	} else if (preference == mStatusBarCenterClock) {
+		} else if (preference == mStatusBarCenterClock) {
             value = mStatusBarCenterClock.isChecked();
             Settings.System.putInt(getContentResolver(), Settings.System.STATUS_BAR_CENTERCLOCK,
                     value ? 1 : 0);
@@ -357,11 +359,11 @@ public class UIStatusBarActivity extends PreferenceActivity implements OnPrefere
             Settings.System.putInt(getContentResolver(),
                     Settings.System.STATUS_BAR_COMPACT_CARRIER, value ? 1 : 0);
             return true;
-	} else if (preference == mStatusBarColor) {
+		} else if (preference == mStatusBarColor) {
             SBColorPickerDialog sbcp = new SBColorPickerDialog(this, mStatusBarColorListener, getStatusBarColor());
             sbcp.show();
             return true;
-	} else if (preference == mNotificationBackgroundColor) {
+		} else if (preference == mNotificationBackgroundColor) {
             NBColorPickerDialog nbcp = new NBColorPickerDialog(this, mNotificationBackgroundColorListener, getNotificationBackgroundColor());
             nbcp.show();
             return true;
