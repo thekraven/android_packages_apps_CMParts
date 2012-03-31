@@ -43,7 +43,6 @@
         <item>24m</item>
         <item>32m</item>
         <item>48m</item>
-	<item>64m</item>
     </string-array>
 
     <string-array name="values_heapsize" translatable="false">
@@ -52,13 +51,12 @@
         <item>24m</item>
         <item>32m</item>
         <item>48m</item>
-	<item>64m</item>
     </string-array>
 
     <string-array name="entries_install_location">
-        <item>Automatic</item>
-        <item>Internal</item>
-        <item>External</item>
+        <item>Automatisk</item>
+        <item>Internt</item>
+        <item>Eksternt</item>
     </string-array>
 
     <string-array name="values_install_location" translatable="false">
@@ -67,56 +65,24 @@
         <item>2</item>
     </string-array>
 
-    <string-array name="values_transparent_status_bar">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-	    <item>3</item>
-    </string-array>
-    
-    <string-array name="entries_transparent_status_bar">
-        <item>Theme</item>
-	    <item>ROM</item>
-        <item>Custom Color</item>
-        <item>Transparent</item>
-    </string-array> 
-
-    <string-array name="values_transparent_notification_background">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-	    <item>3</item>
-        <item>4</item>
-		<item>5</item>
-    </string-array>
-    
-    <string-array name="entries_transparent_notification_background">
-        <item>Theme</item>
-	    <item>ROM</item>
-        <item>Custom Color</item>
-        <item>Transparent</item>
-	    <item>Peeping Android</item>
-		<item>Choose an Image</item>
-    </string-array> 
-
     <string-array name="entries_status_bar_carrier_label" translatable="false">
-		<item>@string/ui_status_bar_carrier_label_use_default</item>
-		<item>@string/ui_status_bar_carrier_label_use_spn</item>
-		<item>@string/ui_status_bar_carrier_label_use_plmn</item>
-		<item>@string/ui_status_bar_carrier_label_use_custom</item>
+	<item>@string/ui_status_bar_carrier_label_use_default</item>
+	<item>@string/ui_status_bar_carrier_label_use_spn</item>
+	<item>@string/ui_status_bar_carrier_label_use_plmn</item>
+	<item>@string/ui_status_bar_carrier_label_use_custom</item>
     </string-array>
 
     <string-array name="values_status_bar_carrier_label" translatable="false">
-		<item>0</item>
-		<item>1</item>
-		<item>2</item>
-		<item>3</item>
+	<item>0</item>
+	<item>1</item>
+	<item>2</item>
+	<item>3</item>
     </string-array>
 
     <string-array name="entries_status_bar_am_pm">
         <item>Normal</item>
-        <item>Small</item>
-        <item>None (Default)</item>
+        <item>Lille</item>
+        <item>Ingen (Standard)</item>
     </string-array>
 
     <string-array name="values_status_bar_am_pm" translatable="false">
@@ -126,9 +92,9 @@
     </string-array>
 
     <string-array name="entries_status_bar_battery">
-        <item>Icon (Default)</item>
-        <item>Percentage</item>
-        <item>Hidden</item>
+        <item>Ikon (Standard)</item>
+        <item>Procent</item>
+        <item>Skjult</item>
     </string-array>
 
     <string-array name="values_status_bar_battery" translatable="false">
@@ -204,9 +170,9 @@
     </string-array>
 
     <string-array name="haptic_feedback_entries">
-        <item>Global Settings</item>
-        <item>On</item>
-        <item>Off</item>
+        <item>Globale indstillinger</item>
+        <item>Tænd</item>
+        <item>Sluk</item>
     </string-array>
 
     <string-array name="haptic_feedback_values" translatable="false">
@@ -258,12 +224,12 @@
     </string-array>
 
     <string-array name="pref_trackball_blink_rate_entries">
-        <item>Use application setting</item>
-        <item>2 (Fast)</item>
+        <item>Brug program indstilling</item>
+        <item>2 (Hurtig)</item>
         <item>3</item>
-        <item>4 (Medium)</item>
+        <item>4 (Mellem)</item>
         <item>5</item>
-        <item>6 (Slow)</item>
+        <item>6 (Langsom)</item>
     </string-array>
 
     <string-array name="pref_trackball_blink_rate_values" translatable="false">
@@ -292,7 +258,7 @@
     </string-array>
 
     <string-array name="pref_lockscreen_delay_entries">
-        <item>Immediately</item>
+        <item>Omgående</item>
         <item>1s</item>
         <item>5s</item>
         <item>10s</item>
@@ -318,9 +284,9 @@
     </string-array>
 
     <string-array name="pref_compcache_size_entries">
-        <item>Disabled</item>
+        <item>Deaktiveret</item>
         <item>10%</item>
-        <item>18% (default)</item>
+        <item>18% (standard)</item>
         <item>26%</item>
     </string-array>
 
@@ -350,7 +316,7 @@
     </string-array>
 
     <string-array name="entries_light_filter_reset">
-        <item>Disabled</item>
+        <item>Deaktiveret</item>
         <item>400 lux</item>
         <item>500 lux</item>
         <item>600 lux</item>
@@ -406,7 +372,7 @@
         <item>14</item>
         <item>16</item>
         <item>18</item>
-        <item>20 (default)</item>
+        <item>20 (standard)</item>
         <item>22</item>
         <item>24</item>
         <item>26</item>
@@ -460,7 +426,7 @@
     <string-array name="entries_sound_attenuation">
         <item>0 dB</item>
         <item>4 dB</item>
-        <item>6 dB (default)</item>
+        <item>6 dB (standard)</item>
         <item>8 dB</item>
         <item>10 dB</item>
     </string-array>
@@ -474,8 +440,8 @@
     </string-array>
 
     <string-array name="entries_sound_limitvol">
-        <item>Attenuated system setting</item>
-        <item>Music volume (default)</item>
+        <item>Dæmpet systemindstilling</item>
+        <item>Musik lydstyrke (standard)</item>
     </string-array>
 
     <string-array name="values_sound_limitvol" translatable="false">
@@ -503,8 +469,8 @@
 
     <string-array name="entries_network_widget">
         <item>2G/3G+2G</item>  
-        <item>2G/3G Only</item>   
-        <item>2G/3G Only/3G+2G</item>
+        <item>Kun 2G/3G</item>   
+        <item>Kun 2G/3G / 3G+2G</item>
     </string-array>
 
     <string-array name="values_network_widget" translatable="false">
@@ -539,7 +505,7 @@
 
     <string-array name="entries_flash_widget">
         <item>Normal</item>
-        <item>High / Death Ray</item>
+        <item>Høj / Meget høj</item>
     </string-array>
 
     <string-array name="values_flash_widget" translatable="false">
@@ -548,8 +514,8 @@
     </string-array>
 
     <string-array name="entries_mobiledatanetwork_widget">
-        <item>Off</item>
-        <item>On</item>
+        <item>Sluk</item>
+        <item>Tænd</item>
     </string-array>
 
     <string-array name="values_mobiledatanetwork_widget" translatable="false">
@@ -558,7 +524,7 @@
     </string-array>
 
     <string-array name="pref_lockscreen_gestures_sensitivity_entries">
-        <item>1 (broadest)</item>
+        <item>1 (bredeste)</item>
         <item>2</item>
         <item>3</item>
         <item>4</item>
@@ -569,7 +535,7 @@
         <item>9</item>
         <item>10</item>
         <item>11</item>
-        <item>12 (strictest)</item>
+        <item>12 (snævreste)</item>
     </string-array>
 
     <string-array name="pref_lockscreen_gestures_sensitivity_values" translatable="false">
@@ -648,9 +614,9 @@
     </string-array>
 
     <string-array name="pref_lockscreen_background_entries">
-        <item>Color fill</item>
-        <item>Custom image</item>
-        <item>Default wallpaper</item>
+        <item>Farve</item>
+        <item>Billede</item>
+        <item>Standard baggrund</item>
     </string-array>
 
     <string-array name="pref_lockscreen_background_values" translatable="false">
@@ -674,10 +640,10 @@
     </string-array>
 
     <string-array name="pref_lockscreen_music_headset_entries">
-        <item>Disabled</item>
-        <item>Wired Headset</item>
-        <item>Bluetooth A2DP Headset</item>
-        <item>Both</item>
+        <item>Deaktiveret</item>
+        <item>Trådet hovedtelefoner</item>
+        <item>Bluetooth A2DP hovedtelefoner</item>
+        <item>Begge</item>
     </string-array>
 
     <string-array name="pref_lockscreen_music_headset_values" translatable="false">
@@ -688,12 +654,12 @@
     </string-array>
 
     <string-array name="pref_lockscreen_calendar_lookahead_entries">
-        <item>3 hours</item>
-        <item>6 hours</item>
-        <item>12 hours</item>
-        <item>1 day</item>
-        <item>3 days</item>
-        <item>1 week</item>
+        <item>3 timer</item>
+        <item>6 timer</item>
+        <item>12 timer</item>
+        <item>1 dag</item>
+        <item>3 dage</item>
+        <item>1 uge</item>
     </string-array>
 
     <string-array name="pref_lockscreen_calendar_lookahead_values" translatable="false">
@@ -706,9 +672,9 @@
     </string-array>
 
     <string-array name="pref_lockscreen_calendar_show_event_metadata_entries">
-        <item>Do not show</item>
-        <item>Show first line</item>
-        <item>Show all</item>
+        <item>Vis ikke</item>
+        <item>Vis første linje</item>
+        <item>Vis alle</item>
     </string-array>
 
     <string-array name="pref_lockscreen_calendar_show_event_metadata_values" translatable="false">
@@ -718,10 +684,10 @@
     </string-array>
 
     <string-array name="pref_overscroll_effect_entries">
-        <item>None</item>
-        <item>Edge Glow</item>
-        <item>Bounce and Glow</item>
-        <item>Bounce</item>
+        <item>Ingen</item>
+        <item>Kantglød</item>
+        <item>Hoppe og gløde</item>
+        <item>Hoppe</item>
     </string-array>
 
     <string-array name="pref_overscroll_effect_values" translatable="false">
@@ -732,11 +698,11 @@
     </string-array>
 
     <string-array name="entries_overscroll_weight">
-        <item>Extra Heavy</item>
-        <item>Heavy</item>
-        <item>Medium</item>
-        <item>Light</item>
-        <item>Extra Light</item>
+        <item>Ekstra kraftig</item>
+        <item>Kraftig</item>
+        <item>Mellem</item>
+        <item>Let</item>
+        <item>Ekstra let</item>
     </string-array>
 
     <string-array name="values_overscroll_weight" translatable="false">
@@ -745,16 +711,6 @@
         <item>5</item>
         <item>7</item>
         <item>9</item>
-    </string-array>
-
-    <string-array name="entries_overscroll_color">
-        <item>Default color</item>
-        <item>Custom color</item>
-    </string-array>
-
-    <string-array name="values_overscroll_color" translatable="false">
-        <item>0</item>
-        <item>1</item>
     </string-array>
 
     <string-array name="phone_goggles_confirmation_values" translatable="false">
@@ -781,35 +737,19 @@
         <item>@string/phone_goggles_maths_level_hard</item>
     </string-array>
 
-    <string-array name="swap_volume_keys_orientation_list_entries" translatable="true">
-        <item>Never</item>
-        <item>0-degrees</item>
-        <item>90-degrees</item>
-        <item>180-degrees</item>
-        <item>270-degrees</item>
-    </string-array>
-
-    <string-array name="swap_volume_keys_orientation_list_values" translatable="false">
-        <item>-1</item>
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
-
     <string-array name="entries_vol_actions">
-        <item>None/Default</item>
-        <item>Home</item>
+        <item>Ingen/Standard</item>
+        <item>Hjem</item>
         <item>Menu</item>
-        <item>Back</item>
-        <item>Search</item>
-        <item>Power</item>
-        <item>Call</item>
-        <item>End call</item>
-        <item>Play/Pause</item>
-        <item>Next track</item>
-        <item>Prev track</item>
-        <item>Long press home</item>
+        <item>Tilbage</item>
+        <item>Søg</item>
+        <item>Tænd/sluk</item>
+        <item>Begynd opkald</item>
+        <item>Afslut opkald</item>
+        <item>Afspil/Pause</item>
+        <item>Næste nummer</item>
+        <item>Forrige nummer</item>
+        <item>Langt tryk på knappen Hjem</item>
     </string-array>
 
     <string-array name="values_vol_actions" translatable="false">
@@ -828,13 +768,13 @@
     </string-array>
 
     <string-array name="entries_unhide_button">
-        <item>Home</item>
+        <item>Hjem</item>
         <item>Menu</item>
-        <item>Back</item>
-        <item>Search</item>
-        <item>Camera</item>
-        <item>Volume Up</item>
-        <item>Volume Down</item>
+        <item>Tilbage</item>
+        <item>Søg</item>
+        <item>Kamera</item>
+        <item>Lydstyrke op</item>
+        <item>Lydstyrke ned</item>
     </string-array>
 
     <string-array name="values_unhide_button" translatable="false">
@@ -848,11 +788,11 @@
     </string-array>
 
     <string-array name="entries_long_press_menu">
-        <item>None</item>
-        <item>Soft keyboard</item>
-        <item>Search key</item>
-        <item>Custom Application</item>
-        <item>Toggle statusbar</item>
+        <item>Ingen</item>
+        <item>Tastatur</item>
+        <item>Knappen Søg</item>
+        <item>Brugerdefinerede program</item>
+        <item>Skifter statuslinjen</item>
     </string-array>
 
     <string-array name="values_long_press_menu" translatable="false">
